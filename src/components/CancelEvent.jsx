@@ -1,17 +1,17 @@
-import { FaTimes } from 'react-icons/fa'
+Jimport { FaTimes } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { cancelEvent } from '../services/blockchain'
 import { useGlobalState, setGlobalState } from '../store'
 
-const CancelEvent = ({ project }) => {
-  const [deleteModal] = useGlobalState('deleteModal')
+const CancelEvent = ({Event}) => {
+  const [cancelModal] = useGlobalState('cancelModal')
   const navigate = useNavigate()
 
   const handleSubmit = async () => {
     await cancelEvent(events[eventId])
-    toast.success('Project deleted successfully, will reflect in 30sec.')
-    setGlobalState('deleteModal', 'scale-0')
+    toast.success('Event cancelled successfully, will reflect in 30sec.')
+    setGlobalState('cancelModal', 'scale-0')
     navigate.push('/')
   }
 
