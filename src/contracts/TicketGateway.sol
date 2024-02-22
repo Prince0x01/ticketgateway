@@ -89,12 +89,10 @@ contract TicketGateway {
             eventDateTime: _eventDateTime,
             totalTickets: _totalTickets,
             soldTickets: 0,
-            ticketPrice: _ticketPrice,
             ticketId: new uint256[](_totalTickets),
             eventstatus: Status.OPEN
         });
-
-        hostToEventIds[_eventHost].push(eventId);
+        hostToEventIds[_eventHost].push(eventId);// Add eventId to hostToEventIds
         eventExists[eventId] = true;
         emit eventCreated(_eventHost, eventId, _eventDateTime);
         return eventId;
@@ -138,7 +136,6 @@ contract TicketGateway {
         // update the event balance by adding the ticketPrice from buyer to eventBalance
         eventBalance[eventId] = eventBalance[eventId] + ticketCost;
         emit ticketPurchased(msg.sender, ticketId, eventId);
-
         return (true, ticketId);
     }
 
@@ -324,7 +321,7 @@ contract TicketGateway {
         require(eventExists[eventId], "Event does not exist");
         return events[eventId];
     }
-
+                                  
     function getTicket(uint256 ticketId) public view returns (Ticket memory) {
         return tickets[ticketId];
     }
