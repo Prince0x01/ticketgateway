@@ -1,34 +1,19 @@
-import { FaTimes } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { cancelEvent } from '../services/blockchain';
-import { useGlobalState, setGlobalState } from '../store';
-import { useState } from 'react';
+import { FaTimes } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { cancelEvent } from '../services/blockchain'
+import { useGlobalState, setGlobalState } from '../store'
 
-const CancelEvent = ({ eventId }) => {
-  const [cancelModal] = useGlobalState('cancelModal');
-  const navigate = useNavigate();
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+const CancelEvent = ({ project }) => {
+  const [deleteModal] = useGlobalState('deleteModal')
+  const navigate = useNavigate()
 
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      const cancelled = await cancelEvent(eventId);
-      setLoading(false);
-      if (cancelled) {
-        toast.success('Event cancelled successfully.');
-        setGlobalState('cancelModal', 'scale-0');
-        navigate.push('/');
-      } else {
-        toast.error('Event cancellation failed.');
-      }
-    } catch (err) {
-      setLoading(false);
-      setError(err.message);
-      console.error(err);
-    }
-  };
+    await cancelEvent(events[eventId])
+    toast.success('Project deleted successfully, will reflect in 30sec.')
+    setGlobalState('deleteModal', 'scale-0')
+    navigate.push('/')
+  }
 
   return (
     <div
